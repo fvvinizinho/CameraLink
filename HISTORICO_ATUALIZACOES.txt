@@ -1,0 +1,21 @@
+HISTORICO DE ATUALIZACOES - Rosto Cam
+
+V1 (22/11/2026)
+- Criacao inicial: emissor de camera + pagina de visualizacao (WebRTC P2P).
+- Sala fixa unica (sem links aleatorios). Senha opcional via variavel SENHA.
+- Controles: iniciar camera, escolher camera/qualidade, microfone liga/desliga,
+  pausar camera (mostra "TELA PAUSADA"), zoom, posicao H/V, espelhar.
+- Configuracoes salvas no navegador (localStorage).
+- Dependencia: aiohttp>=3.9 (Python 3.9+).
+- Nao incluso: tela, so audio, salas, gravacao.
+
+V2 (22/11/2026)
+- Preparada para hospedagem no Render (render.yaml, HOST automatico).
+- Senha (SENHA) obrigatoria quando roda no Render.
+- Estrutura de arquivos plana (sem pasta static) para upload pelo celular.
+- Tela do celular fica acesa enquanto a camera esta ligada (Wake Lock).
+- MANUAL.txt com passo a passo pelo celular.
+
+Ajuste (22/11/2026)
+- Emissor envia sinal a cada 30s para o Render gratis nao dormir durante a live.
+- Projeto renomeado para camera-link (sem numero de versao nos nomes).

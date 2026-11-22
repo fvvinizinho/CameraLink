@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rosto Cam - Emissor</title>
+<style>
+  :root { color-scheme: dark; --bg:#14161a; --card:#1d2026; --line:#2c313a; --txt:#e8eaee; --mut:#9aa1ad; --ok:#3ecf8e; --warn:#f5b942; --bad:#ef5b5b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); font:15px/1.4 system-ui,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:20px; display:grid; gap:16px; }
+  .preview { position:relative; aspect-ratio:16/9; background:#000; border-radius:10px; overflow:hidden; border:1px solid var(--line); }
+  .preview video { width:100%; height:100%; object-fit:contain; display:block; transform-origin:center; }
+  .badge { position:absolute; left:10px; top:10px; padding:3px 10px; border-radius:999px; background:#0009; font-size:13px; }
+  .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; display:grid; gap:12px; }
+  button { background:#2a2f38; color:var(--txt); border:1px solid var(--line); border-radius:8px; padding:9px 14px; font:inherit; cursor:pointer; }
+  button:hover { background:#343a45; }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline:2px solid var(--ok); outline-offset:2px; }
+  button.on { background:var(--ok); color:#06210f; border-color:var(--ok); }
+  button.off { background:var(--bad); color:#2b0505; border-color:var(--bad); }
+  button.warn { background:var(--warn); color:#2b1d03; border-color:var(--warn); }
+  select, input[type=text] { background:#14161a; color:var(--txt); border:1px solid var(--line); border-radius:8px; padding:8px; font:inherit; }
+  label.s { display:grid; grid-template-columns:90px 1fr 56px; gap:10px; align-items:center; }
+  .mut { color:var(--mut); font-size:13px; }
+  #link { flex:1; min-width:220px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="preview">
+    <video id="prev" autoplay muted playsinline></video>
+    <span class="badge" id="status">Conectando...</span>
+  </div>
+
+  <div class="panel">
+    <div class="row">
+      <select id="cam" aria-label="Câmera"></select>
+      <select id="quality" aria-label="Qualidade">
+        <option value="480">480p · leve</option>
+        <option value="720" selected>720p · recomendado</option>
+        <option value="1080">1080p · pesado</option>
+      </select>
+      <button id="start">Iniciar câmera</button>
+    </div>
+    <div class="row">
+      <button id="mic" class="on">Microfone: ligado</button>
+      <button id="pause">Pausar câmera</button>
+      <label class="row"><input type="checkbox" id="mirror"> Espelhar</label>
+    </div>
+  </div>
+
+  <div class="panel">
+    <label class="s">Zoom <input type="range" id="zoom" min="1" max="4" step="0.05" value="1"><span id="zoomV">1.00x</span></label>
+    <label class="s">Horizontal <input type="range" id="px" min="-50" max="50" step="0.5" value="0"><span id="pxV">0</span></label>
+    <label class="s">Vertical <input type="range" id="py" min="-50" max="50" step="0.5" value="0"><span id="pyV">0</span></label>
+    <div class="row"><button id="reset">Resetar zoom</button></div>
+  </div>
+
+  <div class="panel">
+    <span class="mut">Link para o Prism (Fonte de navegador):</span>
+    <div class="row">
+      <input type="text" id="link" readonly>
+      <button id="copy">Copiar</button>
+    </div>
+  </div>
+</main>
+<script src="/push.js"></script>
+</body>
+</html>

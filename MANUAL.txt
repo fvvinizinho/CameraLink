@@ -1,0 +1,85 @@
+MANUAL - Rosto Cam V1
+
+O QUE E
+Envia a camera do seu rosto para um link que voce coloca como "Fonte de
+navegador" no Prism. O video vai direto entre navegadores (WebRTC); o servidor
+Python so faz a conexao inicial.
+
+INSTALACAO
+1. Python 3.9+ instalado.
+2. No terminal, dentro da pasta do projeto:
+   pip install -r requirements.txt
+3. Iniciar:
+   python server.py
+
+USO (tudo no mesmo PC - recomendado, nao usa internet)
+1. Abra no navegador (Chrome/Edge): http://localhost:8080/
+2. Clique "Iniciar camera" e permita camera/microfone.
+3. No Prism, adicione Fonte de navegador com o link: http://localhost:8080/view
+4. Ajuste zoom/posicao no emissor. A mudanca aparece no Prism na hora.
+5. Mantenha a aba do emissor aberta (nao feche) durante a live.
+
+CONTROLES
+- Microfone ligado/desligado.
+- Pausar camera: o Prism mostra "TELA PAUSADA".
+- Zoom (1x a 4x), Horizontal, Vertical, Resetar, Espelhar.
+- Qualidade: 480p (leve), 720p (recomendado), 1080p (pesado).
+
+OPCOES NO LINK DE VISUALIZACAO
+- ?mute=1        video sem audio (use se o microfone ja entra direto no Prism)
+- ?text=Volto ja texto personalizado da tela pausada
+
+CONFIGURACAO (variaveis de ambiente)
+- PORT (padrao 8080)
+- HOST (padrao 127.0.0.1; use 0.0.0.0 para outros aparelhos na rede)
+- SENHA (opcional): exige ?key=SENHA nos dois links
+- TURN_URL, TURN_USER, TURN_PASS (opcional, para redes restritivas)
+Exemplo Windows (PowerShell): $env:SENHA="abc"; python server.py
+
+PERMISSOES E LIMITES
+- Camera/microfone exigem localhost ou HTTPS. Em outro PC via rede, use HTTPS.
+- Depende do navegador do Prism ser Chromium com suporte a WebRTC (verifique
+  na sua versao). Se o video nao aparecer no Prism, teste o link no Chrome.
+- Se o emissor travar, o Prism fica parado; a pagina reconecta sozinha.
+- Browsers em segundo plano podem reduzir desempenho: deixe a aba visivel.
+
+DIREITOS AUTORAIS
+Codigo original criado para uso pessoal. Inspirado no conceito do VDO.ninja,
+sem usar codigo dele.
+
+=====================================================================
+HOSPEDAR NO RENDER PELO CELULAR (sem PC)
+=====================================================================
+Os nomes dos botoes podem variar um pouco conforme a versao do site.
+
+A) GITHUB (guarda os arquivos)
+1. Crie conta em github.com e entre.
+2. Toque em "+" > "New repository". Nome: rosto-cam. Marque "Public". "Create".
+3. Descompacte o .zip no celular (app de arquivos).
+4. No repositorio: "uploading an existing file" (ou Add file > Upload files).
+5. Selecione TODOS os arquivos de dentro da pasta (server.py, requirements.txt,
+   render.yaml, push.html, push.js, view.html, view.js, MANUAL.txt,
+   HISTORICO_ATUALIZACOES.txt). Envie os arquivos, nao o .zip.
+6. "Commit changes".
+
+B) RENDER (liga o servidor)
+1. Em render.com: "New +" > "Web Service".
+2. Escolha "Public Git Repository", cole o link do repositorio do GitHub.
+3. Configure:
+   - Language/Runtime: Python 3
+   - Build Command:  pip install -r requirements.txt
+   - Start Command:  python server.py
+   - Instance Type:  Free
+4. Em "Environment Variables" adicione:
+   - Nome: SENHA   Valor: (escolha uma senha sem espacos, ex.: rosto2026x)
+5. "Deploy". Quando aparecer "Live", copie a URL (https://xxxx.onrender.com).
+
+C) USAR
+- Celular da camera:  https://xxxx.onrender.com/?key=SUASENHA
+- Prism (navegador):  https://xxxx.onrender.com/view?key=SUASENHA
+- Durante a live o servidor NAO dorme: a pagina do emissor envia um sinal a
+  cada 30s (mantenha a aba aberta e a tela acesa).
+- Fora da live, o plano gratis dorme apos 15 min sem uso: abra o link do
+  emissor uns 2 minutos antes de comecar para acordar o servidor.
+- Se nao conectar so no 4G/5G, pode faltar servidor TURN (variaveis
+  TURN_URL, TURN_USER, TURN_PASS). Avise que eu ajudo.
